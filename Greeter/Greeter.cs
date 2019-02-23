@@ -2,13 +2,11 @@ namespace Greeter
 {
     public class Greeter : IGreeter
     {
+        private const string DefaultGreeting = "Hello, my friend.";
+        
         public string Greet(string name)
         {
-            if (name == null)
-            {
-                return "Hello, my friend.";
-            }
-            return $"Hello, {name}.";
+            return name == null ? DefaultGreeting : $"Hello, {name}.";
         }
     }
 }
