@@ -30,5 +30,15 @@ namespace Greeter.Tests
             
             Assert.Equal($"Hello, my friend.", result);
         }
+        
+        [Fact]
+        public void WhenNameIsUpperCasedThenGreeterShouldBeShouted()
+        {
+            var name = "JOE";
+
+            var result = greeter.Greet(name);
+            
+            Assert.Equal($"HELLO, {name}.", result);
+        }
     }
 }
