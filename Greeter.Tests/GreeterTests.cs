@@ -10,5 +10,15 @@ namespace Greeter.Tests
         {
             greeter = new Greeter();
         }
+        
+        [Fact]
+        public void WhenNameIsProvidedThenGreeterShouldGreet()
+        {
+            var name = "Joe";
+
+            var result = greeter.Greet(name);
+            
+            Assert.Equal($"Hello, {name}.", result);
+        }
     }
 }
