@@ -8,12 +8,10 @@ namespace Greeter
         {
             if (name == null)
                 return DefaultGreeting;
-            if (IsUpperCased(name))
+            if (name.IsUpperCased())
                 return $"HELLO, {name}.";
             
             return $"Hello, {name}.";
         }
-
-        private static bool IsUpperCased(string @string) => @string == @string.ToUpperInvariant();
     }
 }
