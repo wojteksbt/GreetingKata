@@ -20,5 +20,15 @@ namespace Greeter.Tests
             
             Assert.Equal($"Hello, {name}.", result);
         }
+        
+        [Fact]
+        public void WhenNameIsNullThenGreeterShouldGreetWithDefaultGreeting()
+        {
+            string name = null;
+
+            var result = greeter.Greet(name);
+            
+            Assert.Equal($"Hello, my friend.", result);
+        }
     }
 }
