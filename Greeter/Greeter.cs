@@ -6,7 +6,12 @@ namespace Greeter
         
         public string Greet(string name)
         {
-            return name == null ? DefaultGreeting : $"Hello, {name}.";
+            if (name == null)
+                return DefaultGreeting;
+            if (name == name.ToUpperInvariant())
+                return $"HELLO, {name}.";
+            
+            return $"Hello, {name}.";
         }
     }
 }
