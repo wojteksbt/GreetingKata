@@ -19,8 +19,15 @@ namespace Greeter
             return greeting;
         }
 
-        private static string BuildGreeted(string[] names) 
-            => string.Join(" and ", names);
+        private static string BuildGreeted(string[] names)
+        {
+            if (names.Length <= 2)
+                return string.Join(" and ", names);
+
+            var joinedWithoutLast = string.Join(", ", names, 0, names.Length - 1);
+
+            return $"{joinedWithoutLast}, and {names.Last()}";
+        }
 
         private static string Shout(string text) => text.ToUpperInvariant();
     }
