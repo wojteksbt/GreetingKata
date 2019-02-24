@@ -40,5 +40,17 @@ namespace Greeter.Tests
             
             Assert.Equal($"HELLO, {name}.", result);
         }
+                
+        [Fact]
+        public void WhenThereAreTwoNamesThenGreeterShouldGreetBothOfThem()
+        {
+            var names = new[] {"Joe", "Megan"};
+
+            var result = greeter.Greet(names);
+            
+            Assert.Equal($"HELLO, {names[0]} and {names[1]}.", result);
+        }
+        
+        
     }
 }
