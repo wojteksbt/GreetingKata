@@ -48,7 +48,7 @@ namespace Greeter.Tests
 
             var result = greeter.Greet(names);
             
-            Assert.Equal($"HELLO, {names[0]} and {names[1]}.", result);
+            Assert.Equal($"Hello, {names[0]} and {names[1]}.", result);
         }
         
         
