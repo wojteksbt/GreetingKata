@@ -13,5 +13,10 @@ namespace Greeter
             
             return $"Hello, {name}.";
         }
+
+        public string Greet(params string[] names)
+        {
+            return $"Hello, {names[0]} and {names[1]}.";
+        }
     }
 }
