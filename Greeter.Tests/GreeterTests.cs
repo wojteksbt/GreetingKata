@@ -52,5 +52,15 @@ namespace Greeter.Tests
         }
         
         
+        [Fact]
+        // It is an assumption as requirements are not well defined
+        public void WhenAllNamesAreUpperCasedThenGreetingShouldBeShouted()
+        {
+            var names = new[] {"JOE", "MEGAN"};
+
+            var result = greeter.Greet(names);
+            
+            Assert.True(result.IsUpperCased());
+        }
     }
 }
