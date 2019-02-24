@@ -1,4 +1,5 @@
 using System.Linq;
+[assembly: System.Runtime.CompilerServices.InternalsVisibleTo("Greeter.Tests")]
 
 namespace Greeter
 {
