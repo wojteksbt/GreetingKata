@@ -62,5 +62,15 @@ namespace Greeter.Tests
             
             Assert.True(result.IsUpperCased());
         }
+        
+        [Fact]
+        public void WhenThereAreManyNamesThenGreeterShouldGreetWithCommasIncludingOxfordComma()
+        {
+            var names = new[] {"Joe", "Megan", "Fred"};
+
+            var result = greeter.Greet(names);
+            
+            Assert.Equal($"Hello, {names[0]}, {names[1]}, and {names[2]}.", result);
+        }
     }
 }
