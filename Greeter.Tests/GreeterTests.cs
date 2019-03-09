@@ -38,7 +38,7 @@ namespace Greeter.Tests
 
             var result = greeter.Greet(name);
             
-            Assert.Equal($"HELLO, {name}.", result);
+            Assert.Equal($"HELLO {name}!", result);
         }
                 
         [Fact]
