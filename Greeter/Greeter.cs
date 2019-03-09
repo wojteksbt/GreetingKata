@@ -12,18 +12,19 @@ namespace Greeter
             if (names[0] == null)
                 return SpeakGreeting(DefaultGreeted);
 
-            var greeted = ListFormatter.FormatList(names);
-            
-            return ShouldGreetingBeShouted(names) 
-                ? SpeakGreeting(greeted) 
-                : ShoutGreeting(greeted);
+            var spokenNames = names.Where(n => !n.IsUpperCased()).ToArray();
+            var shoutedNames = names.Where(n => n.IsUpperCased()).ToArray();
+
+            var spokenPart = spokenNames.Any() ? SpeakGreeting(ListFormatter.FormatList(spokenNames)) : "";
+            var shoutedPart = shoutedNames.Any() ? ShoutGreeting(ListFormatter.FormatList(shoutedNames)) : "";
+            var conjunction = spokenNames.Any() && shoutedNames.Any() ? " AND " : "";
+
+            return $"{spokenPart}{conjunction}{shoutedPart}";
         }
         
         private string SpeakGreeting(string greeted) => $"Hello, {greeted}.";
         
-        private string ShoutGreeting(string greeted) => $"HELLO {greeted}!";
-   
-        private static bool ShouldGreetingBeShouted(string[] names) => names.All(n => n.IsUpperCased());
+        private string ShoutGreeting(string greeted) => $"HELLO {greeted.ToUpperInvariant()}!";
     }
 
     internal static class ListFormatter
@@ -32,6 +33,8 @@ namespace Greeter
         {
             switch (elements.Length)
             {
+                case 0:
+                    return string.Empty;
                 case 1:
                     return elements[0];
                 case 2:
