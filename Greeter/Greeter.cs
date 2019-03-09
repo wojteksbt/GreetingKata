@@ -5,30 +5,39 @@ namespace Greeter
 {
     public class Greeter : IGreeter
     {
-        private const string DefaultGreeting = "Hello, my friend.";
+        private const string DefaultGreeted = "my friend";
 
         public string Greet(params string[] names)
         {
             if (names[0] == null)
-                return DefaultGreeting;
+                return SpeakGreeting(DefaultGreeted);
 
-            var greeted = FormatGreeted(names);
-                
-            var greeting = $"Hello, {greeted}.";
-
-            return ShouldGreetingBeShouted(names) ? Shout(greeting) : greeting;
+            var greeted = ListFormatter.FormatList(names);
+            
+            return ShouldGreetingBeShouted(names) 
+                ? SpeakGreeting(greeted) 
+                : ShoutGreeting(greeted);
         }
+        
+        private string SpeakGreeting(string greeted) => $"Hello, {greeted}.";
+        
+        private string ShoutGreeting(string greeted) => $"HELLO {greeted}!";
+   
+        private static bool ShouldGreetingBeShouted(string[] names) => names.All(n => n.IsUpperCased());
+    }
 
-        private static string FormatGreeted(string[] names)
+    internal static class ListFormatter
+    {
+        public static string FormatList(string[] elements)
         {
-            switch (names.Length)
+            switch (elements.Length)
             {
                 case 1:
-                    return names[0];
+                    return elements[0];
                 case 2:
-                    return $"{names[0]} and {names[1]}";
+                    return $"{elements[0]} and {elements[1]}";
                 default:
-                    return FormatManyGreeted(names);
+                    return FormatManyGreeted(elements);
             }
         }
 
@@ -38,9 +47,5 @@ namespace Greeter
 
             return $"{formattedAllButLastElement}, and {names.Last()}";
         }
-        
-        private static bool ShouldGreetingBeShouted(string[] names) => names.All(n => n.IsUpperCased());
-
-        private static string Shout(string text) => text.ToUpperInvariant();
     }
 }
