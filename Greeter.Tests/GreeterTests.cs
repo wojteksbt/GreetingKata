@@ -72,5 +72,15 @@ namespace Greeter.Tests
             
             Assert.Equal($"Hello, {names[0]}, {names[1]}, and {names[2]}.", result);
         }
+        
+        [Fact]
+        public void WhenThereAreMixedNormalAndShoutedNamesThenTheShouldBeGreetedSeparately()
+        {
+            var names = new[] {"Joe", "MEGAN", "Fred"};
+
+            var result = greeter.Greet(names);
+            
+            Assert.Equal($"Hello, {names[0]} and {names[2]}. AND HELLO {names[1]}!", result);
+        }
     }
 }
