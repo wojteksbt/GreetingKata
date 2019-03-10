@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 [assembly: System.Runtime.CompilerServices.InternalsVisibleTo("Greeter.Tests")]
 
@@ -12,8 +13,10 @@ namespace Greeter
             if (names[0] == null)
                 return $"Hello, {DefaultGreeted}.";
 
-            var spokenNames = names.Where(n => !n.IsUpperCased()).ToArray();
-            var shoutedNames = names.Where(n => n.IsUpperCased()).ToArray();
+            var splittedNames = names.SelectMany(name => name.Split(new []{", "}, StringSplitOptions.None));
+
+            var spokenNames = splittedNames.Where(n => !n.IsUpperCased()).ToArray();
+            var shoutedNames = splittedNames.Where(n => n.IsUpperCased()).ToArray();
 
             var spokenPart = BuildSpokenPart(spokenNames);
             var shoutedPart = BuildShoutedPart(shoutedNames);
