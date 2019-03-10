@@ -6,47 +6,44 @@ namespace Greeter
 {
     public class Greeter : IGreeter
     {
+        private const string Welcome = "Hello";
         private const string DefaultGreeted = "my friend";
 
         public string Greet(params string[] names)
         {
             if (names[0] == null)
-                return $"Hello, {DefaultGreeted}.";
+                return $"{Welcome}, {DefaultGreeted}.";
 
             var splittedNames = SplitNames(names);
 
-            var spokenNames = splittedNames.Where(n => !n.IsUpperCased()).ToArray();
-            var shoutedNames = splittedNames.Where(n => n.IsUpperCased()).ToArray();
-
-            var spokenPart = BuildSpokenPart(spokenNames);
-            var shoutedPart = BuildShoutedPart(shoutedNames);
-            var conjunction = spokenNames.Any() && shoutedNames.Any() ? " AND " : "";
+            var spokenPart = BuildSpokenPart(splittedNames);
+            var shoutedPart = BuildShoutedPart(splittedNames);
+            var conjunction = BuildConjunction(spokenPart, shoutedPart);
 
             return $"{spokenPart}{conjunction}{shoutedPart}";
         }
 
-        private static string[] SplitNames(IEnumerable<string> names)
-        {
-            return names.SelectMany(SplitWithEscapingByQuotes).ToArray();
-        }
+        private static string[] SplitNames(IEnumerable<string> names) 
+            => names.SelectMany(n => Splitter.SplitWithEscaping(n)).ToArray();
 
-        private static string[] SplitWithEscapingByQuotes(string value)
+        private static string BuildSpokenPart(IEnumerable<string> names)
         {
-            if (value[0] == '\"' && value[0] == '\"')
-                return new []{ value.Substring(1, value.Length - 2) };
-            return value.Split(", ");
-        }
-
-        private static string BuildSpokenPart(string[] spokenNames)
-        {
+            var spokenNames = names.Where(n => !n.IsUpperCased()).ToArray();
             var greeted = ListFormatter.FormatList(spokenNames);
-            return spokenNames.Any() ? $"Hello, {greeted}." : "";
+            return spokenNames.Any() ? $"{Welcome}, {greeted}." : "";
         }
 
-        private static string BuildShoutedPart(string[] shoutedNames)
+        private static string BuildShoutedPart(IEnumerable<string> names)
         {
+            var shoutedNames = names.Where(n => n.IsUpperCased()).ToArray();
             var greeted = ListFormatter.FormatList(shoutedNames);
-            return shoutedNames.Any() ? $"HELLO {greeted.ToUpperInvariant()}!" : "";
+            return shoutedNames.Any() ? $"{Welcome} {greeted}!".ToUpperInvariant() : "";
+        }
+        
+        private static string BuildConjunction(string spokenPart, string shoutedPart)
+        {
+            var areBothPartsPresent = spokenPart != "" && shoutedPart != "";
+            return areBothPartsPresent ? " AND " : "";
         }
     }
 }
