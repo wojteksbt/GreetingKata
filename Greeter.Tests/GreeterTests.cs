@@ -82,5 +82,15 @@ namespace Greeter.Tests
             
             Assert.Equal($"Hello, {names[0]} and {names[2]}. AND HELLO {names[1]}!", result);
         }
+
+        [Fact]
+        public void WhenThereAreNamesContainingCommaThenItShouldBeSplitted()
+        {
+            var names = new[] {"Bob", "Charlie, Dianne"};
+
+            var result = greeter.Greet(names);
+            
+            Assert.Equal($"Hello, {names[0]}, Charlie, and Dianne.", result);
+        }
     }
 }
