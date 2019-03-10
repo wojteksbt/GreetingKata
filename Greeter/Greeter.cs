@@ -25,8 +25,17 @@ namespace Greeter
             return $"{spokenPart}{conjunction}{shoutedPart}";
         }
 
-        private static string[] SplitNames(IEnumerable<string> names) 
-            => names.SelectMany(name => name.Split(", ")).ToArray();
+        private static string[] SplitNames(IEnumerable<string> names)
+        {
+            return names.SelectMany(SplitWithEscapingByQuotes).ToArray();
+        }
+
+        private static string[] SplitWithEscapingByQuotes(string value)
+        {
+            if (value[0] == '\"' && value[0] == '\"')
+                return new []{ value.Substring(1, value.Length - 2) };
+            return value.Split(", ");
+        }
 
         private static string BuildSpokenPart(string[] spokenNames)
         {
